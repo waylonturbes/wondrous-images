@@ -1,0 +1,36 @@
+---
+export interface ImageCardProps {
+  imageSrc: string;
+}
+
+const { imageSrc } = Astro.props;
+---
+
+<div class="image-card" tabindex="0">
+  <img class="image-card__img" src={imageSrc} />
+</div>
+
+<style>
+  .image-card {
+    cursor: pointer;
+    border-color: var(--fg-neutral-on-primary);
+    border-radius: 1rem;
+    border-width: 0.25rem;
+    border-style: solid;
+    flex-grow: 1;
+    transition: border-color 200ms ease-in-out, padding 200ms ease-in-out;
+    overflow: hidden;
+  }
+  .image-card__img {
+    aspect-ratio: 1 / 1;
+    transition: border-radius 200ms ease-in;
+    width: 100%;
+    height: 100%;
+    transition: transform 200ms ease-in-out;
+  }
+  .image-card:focus-visible > .image-card__img,
+  .image-card:active > .image-card__img,
+  .image-card:hover > .image-card__img {
+    transform: scale(1.1);
+  }
+</style>

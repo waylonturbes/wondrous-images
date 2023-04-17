@@ -1,6 +1,6 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,28 +8,163 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 <style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  *:focus-visible {
+    outline: solid 0.25rem var(--fg-neutral-on-primary);
+    outline-offset: 0.25rem;
+  }
+  html {
+    /*
+		* === Breakpoints === 
+		*/
+    --breakpoint-sm: 36rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 62rem;
+    --breakpoint-xl: 75rem;
+    /*
+		* === Background Colors === 
+		*/
+    --bg-primary: rgb(0, 101, 196);
+    --bg-primary-hovered: rgb(0, 92, 179);
+    --bg-primary-pressed: rgb(0, 83, 161);
+    --bg-secondary: rgb(133, 1, 133);
+    --bg-secondary-hovered: rgb(117, 0, 117);
+    --bg-secondary-pressed: rgb(102, 0, 102);
+    --bg-tertiary: rgb(0, 113, 121);
+    --bg-surface: rgb(255, 255, 255);
+    --bg-surface-hovered: rgb(220, 220, 220);
+    --bg-surface-pressed: rgb(190, 190, 190);
+    --bg-screen: rgb(246, 246, 246);
+    --bg-muted: rgb(160, 160, 160);
+    /*
+		* === Foreground Colors === 
+		*/
+    --fg-neutral-on-primary: rgb(240, 240, 240);
+    --fg-neutral-on-secondary: rgb(240, 240, 240);
+    --fg-neutral-on-tertiary: rgb(240, 240, 240);
+    --fg-neutral-on-surface: rgb(40, 40, 40);
+    --fg-neutral-on-screen: rgb(40, 40, 40);
+    --fg-neutral-on-muted: rgb(40, 40, 40);
+
+    --fg-primary-on-surface: rgb(0, 79, 153);
+    --fg-primary-on-screen: rgb(0, 79, 153);
+    --fg-primary-on-muted: rgb(0, 79, 153);
+
+    --fg-secondary-on-surface: rgb(101, 1, 101);
+    --fg-secondary-on-screen: rgb(101, 1, 101);
+    --fg-secondary-on-muted: rgb(101, 1, 101);
+
+    --fg-muted-on-primary: rgb(232, 232, 232);
+    --fg-muted-on-secondary: rgb(232, 232, 232);
+    --fg-muted-on-tertiary: rgb(232, 232, 232);
+    --fg-muted-on-surface: rgb(232, 232, 232);
+    --fg-muted-on-screen: rgb(232, 232, 232);
+    /* 
+		* === Properties ===
+		*/
+    font-family: system-ui, sans-serif;
+  }
+  html[color-scheme="dark"] {
+    /*
+		* === Background Colors === 
+		*/
+    --bg-primary: rgb(46, 154, 255);
+    --bg-secondary: rgb(250, 81, 250);
+    --bg-tertiary: rgb(1, 175, 187);
+    --bg-surface: rgb(40, 40, 40);
+    --bg-screen: rgb(60, 60, 60);
+    --bg-muted: rgb(100, 100, 100);
+    /*
+		* === Foreground Colors === 
+		*/
+    --fg-neutral-on-primary: rgb(25, 25, 25);
+    --fg-neutral-on-secondary: rgb(25, 25, 25);
+    --fg-neutral-on-tertiary: rgb(25, 25, 25);
+    --fg-neutral-on-surface: rgb(240, 240, 240);
+    --fg-neutral-on-screen: rgb(240, 240, 240);
+    --fg-neutral-on-muted: rgb(240, 240, 240);
+
+    --fg-primary-on-surface: rgb(204, 230, 255);
+    --fg-primary-on-screen: rgb(204, 230, 255);
+    --fg-primary-on-muted: rgb(204, 230, 255);
+
+    --fg-secondary-on-surface: rgb(255, 214, 255);
+    --fg-secondary-on-screen: rgb(255, 214, 255);
+    --fg-secondary-on-muted: rgb(255, 214, 255);
+
+    --fg-muted-on-primary: rgb(48, 48, 48);
+    --fg-muted-on-secondary: rgb(48, 48, 48);
+    --fg-muted-on-tertiary: rgb(48, 48, 48);
+    --fg-muted-on-surface: rgb(179, 179, 179);
+    --fg-muted-on-screen: rgb(179, 179, 179);
+  }
+  body {
+    margin: 0rem;
+    background: linear-gradient(
+      270deg,
+      var(--bg-secondary),
+      var(--bg-primary),
+      var(--bg-tertiary)
+    );
+    background-size: 600% 600%;
+    -webkit-animation: BackgroundGradientAnimation 30s ease infinite;
+    -moz-animation: BackgroundGradientAnimation 30s ease infinite;
+    -o-animation: BackgroundGradientAnimation 30s ease infinite;
+    animation: BackgroundGradientAnimation 30s ease infinite;
+  }
+  @-webkit-keyframes BackgroundGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @-moz-keyframes BackgroundGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @-o-keyframes BackgroundGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @keyframes BackgroundGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 </style>
